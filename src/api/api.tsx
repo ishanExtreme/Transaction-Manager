@@ -102,3 +102,11 @@ export const login = (user:UserLoginApi)=> {
 export const me = ()=>{
     return request('user/me', 'GET')
 }
+
+export const addFriend = (friend:string)=>{
+    return request("create-friend/", 'POST', {friend:friend})
+}
+
+export const listFriends = ()=>{
+    return request("list-friends/", "GET")
+}

@@ -13,3 +13,9 @@ export type UserLoginApi = {
     username: string,
     password: string
 }
+
+export type Friend = {
+    username: string
+}
+
+export type Friends = Array<Friend>
