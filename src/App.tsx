@@ -1,25 +1,59 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react';
+import { me } from './api/api';
+import AppContainer from './components/common/AppContainer';
+import AppRouterPrivate from './routes/AppRouterPrivate';
+import AppRouterPublic from './routes/AppRouterPublic';
+// import AppRouterPrivate from './routes/AppRouterPrivate';
+import { User } from './types/users';
+
+const getCurrentUser = async (
+  setCurrentUser: (user:User)=>void, 
+  setLoading: (load:boolean)=>void) =>{
+
+  setLoading(true)
+  let currtUser:any = null
+  try{
+    currtUser = await me();
+  }
+  catch(error)
+  {
+    console.log(error)
+  }
+
+  if(currtUser == null)
+    setCurrentUser(null)
+  else
+    setCurrentUser(currtUser[0]);
+  setLoading(false)
+
+}
 
 function App() {
+
+  const [currentUser, setCurrentUser] = useState<User>(null);
+  const [loading, setLoading] = useState(false)
+
+
+  useEffect(()=>{
+    getCurrentUser(setCurrentUser, setLoading);
+  },[])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    loading?
+
+    <AppContainer >
+      <div className="flex flex-row justify-center w-full items-center mt-3 mb-3"> 
+          <div className="spinner-grow inline-block w-8 h-8 bg-current rounded-full opacity-0" role="status">
+              <span className="visually-hidden">Loading...</span>
+          </div>
+      </div>
+    </AppContainer>  
+   
+    :
+    currentUser?
+    <AppRouterPrivate currentUser={currentUser}/>
+    :
+    <AppRouterPublic />
   );
 }
 
