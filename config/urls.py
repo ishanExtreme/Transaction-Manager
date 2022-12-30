@@ -8,7 +8,12 @@ from django.views.generic import TemplateView
 from rest_framework.routers import SimpleRouter
 from rest_framework.authtoken import views
 
-from budget_management.users.api.views import UserCreation, UserGet
+from budget_management.users.api.views import (
+    UserCreation,
+    UserGet,
+    FriendCreation,
+    FriendList,
+)
 
 
 # API URLS
@@ -16,19 +21,28 @@ router = SimpleRouter()
 router.register("api/user/register", UserCreation)
 router.register("api/user/me", UserGet)
 
-urlpatterns = [
-    path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
-    path(
-        "about/", TemplateView.as_view(template_name="pages/about.html"), name="about"
-    ),
-    # Django Admin, use {% url 'admin:index' %}
-    path(settings.ADMIN_URL, admin.site.urls),
-    # User management
-    path("users/", include("budget_management.users.urls", namespace="users")),
-    path("accounts/", include("allauth.urls")),
-    # Your stuff: custom urls includes go here
-    path("api/token", views.obtain_auth_token),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + router.urls
+
+urlpatterns = (
+    [
+        path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
+        path(
+            "about/",
+            TemplateView.as_view(template_name="pages/about.html"),
+            name="about",
+        ),
+        # Django Admin, use {% url 'admin:index' %}
+        path(settings.ADMIN_URL, admin.site.urls),
+        # User management
+        path("users/", include("budget_management.users.urls", namespace="users")),
+        path("accounts/", include("allauth.urls")),
+        # Your stuff: custom urls includes go here
+        path("api/token", views.obtain_auth_token),
+        path("api/create-friend/", FriendCreation.as_view()),
+        path("api/list-friends/", FriendList.as_view()),
+    ]
+    + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    + router.urls
+)
 
 if settings.DEBUG:
     # This allows the error pages to be debugged during development, just visit
