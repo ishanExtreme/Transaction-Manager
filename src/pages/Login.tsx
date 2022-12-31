@@ -1,61 +1,57 @@
-import { navigate } from 'raviger';
-import { useEffect, useState } from 'react';
-import Row  from 'react-bootstrap/Row';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import { User, UserLoginApi } from '../types/users';
-import { Card, Col, Stack } from 'react-bootstrap';
-import { login } from "../api/api";
-import Loading from '../components/common/Loading';
+/* eslint-disable @typescript-eslint/no-misused-promises */
+/* eslint-disable react/react-in-jsx-scope */
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+import { navigate } from 'raviger'
+import { useEffect, useState } from 'react'
+import Row from 'react-bootstrap/Row'
+import Button from 'react-bootstrap/Button'
+import Form from 'react-bootstrap/Form'
+import { User, UserLoginApi } from '../types/users'
+import { Card, Col, Stack } from 'react-bootstrap'
+import { login } from '../api/api'
+import Loading from '../components/common/Loading'
 
-function Login(props:{user?:User}) {
-
-  const [username, setUsername] = useState("")
-  const [password, setPassword] = useState("")
+function Login (props: { user?: User }) {
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
 
-  const handleUsernameChange = (e:any)=>{
-
+  const handleUsernameChange = (e: any) => {
     setUsername(e.target.value)
   }
 
-  const handlePasswordChange = (e:any)=>{
-
+  const handlePasswordChange = (e: any) => {
     setPassword(e.target.value)
   }
 
-  useEffect(()=>{
-        if(props.user)
-            navigate("/dashboard")
-  },[]);
+  useEffect(() => {
+    if (props.user != null) { navigate('/dashboard') }
+  }, [])
 
-  const switchToRegister = ()=>{
-    navigate("/register")
+  const switchToRegister = () => {
+    navigate('/register')
   }
 
-  const handleSubmit = async (e:any)=>{
-    e.preventDefault();
+  const handleSubmit = async (e: any) => {
+    e.preventDefault()
 
     setLoading(true)
-    const user:UserLoginApi = {username:username, password: password}
-
+    const user: UserLoginApi = { username, password }
 
     let data
-    try{
+    try {
       data = await login(user)
-      localStorage.setItem("token", data.token)
-      navigate("/dashboard")
-      
+      localStorage.setItem('token', data.token)
+      navigate('/dashboard')
+
       window.location.reload()
 
       setLoading(false)
-    }
-    catch(error)
-    {
+    } catch (error) {
       setLoading(false)
     }
   }
-    
+
   return (
     <Row className='justify-content-center'>
       <Col xs={6}>
@@ -66,29 +62,28 @@ function Login(props:{user?:User}) {
               <Form onSubmit={handleSubmit}>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Label>Username</Form.Label>
-                  <Form.Control 
-                  required 
-                  type="text" 
-                  placeholder="Enter username" 
+                  <Form.Control
+                  required
+                  type="text"
+                  placeholder="Enter username"
                   onChange={handleUsernameChange}
                   />
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicPassword">
                   <Form.Label>Password</Form.Label>
-                  <Form.Control 
-                  required 
-                  type="password" 
-                  placeholder="Password" 
+                  <Form.Control
+                  required
+                  type="password"
+                  placeholder="Password"
                   onChange={handlePasswordChange}
                   />
                 </Form.Group>
                 <Stack gap={3}>
                   <Col xs={12} className='text-center'>
-                    {loading?
-                      <Loading />
-                      :
-                      <Button variant="primary" type="submit">
+                    {loading
+                      ? <Loading />
+                      : <Button variant="primary" type="submit">
                         Login
                       </Button>
                     }
@@ -106,7 +101,7 @@ function Login(props:{user?:User}) {
         </Card>
       </Col>
     </Row>
-  );
+  )
 }
 
-export default Login;
+export default Login

@@ -1,21 +1,22 @@
 export type User = {
-    username: string,
-    email: string,
+  username: string
+  email: string
+  budget: number
 } | null
 
-export type UserRegisterApi = {
-    username: string,
-    email: string,
-    password: string
+export interface UserRegisterApi {
+  username: string
+  email: string
+  password: string
 }
 
-export type UserLoginApi = {
-    username: string,
-    password: string
+export interface UserLoginApi {
+  username: string
+  password: string
 }
 
-export type Friend = {
-    username: string
+export interface Friend {
+  username: string
 }
 
-export type Friends = Array<Friend>
+export type Friends = Friend[]

@@ -1,22 +1,22 @@
-import React from 'react';
-import {useRoutes} from 'raviger'
-import { User } from '../types/users';
-import Register from '../pages/Register';
-import Login from '../pages/Login';
-import Dashboard from '../pages/Dashboard';
-import AppContainer from '../components/common/AppContainer';
+import React from 'react'
+import { useRoutes } from 'raviger'
+import { User } from '../types/users'
+import Register from '../pages/Register'
+import Login from '../pages/Login'
+import Dashboard from '../pages/Dashboard'
+import AppContainer from '../components/common/AppContainer'
 
 const Privateroutes = {
-    '/': ({user}:{user?:User})=><Dashboard user={user?user:null} />,
-    '/register': ({user}:{user?:User})=> <Register user={user}/>,
-    '/login': ({user}:{user?:User})=><Login user={user}/>,
-    '/dashboard': ({user}:{user?:User})=><Dashboard user={user?user:null} />,
+  '/': ({ user }: { user?: User }) => <Dashboard user={(user != null) ? user : null} />,
+  '/register': ({ user }: { user?: User }) => <Register user={user}/>,
+  '/login': ({ user }: { user?: User }) => <Login user={user}/>,
+  '/dashboard': ({ user }: { user?: User }) => <Dashboard user={(user != null) ? user : null} />
 }
 
-export default function AppRouterPrivate(props:{currentUser:User}) {
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+export default function AppRouterPrivate (props: { currentUser: User }) {
+  // Private routes
+  const routeResult = useRoutes(Privateroutes, { routeProps: { user: props.currentUser } })
 
-    // Private routes
-    const routeResult = useRoutes(Privateroutes, { routeProps: { user: props.currentUser } });
-    
-    return <AppContainer>{routeResult}</AppContainer>;
+  return <AppContainer>{routeResult}</AppContainer>
 }

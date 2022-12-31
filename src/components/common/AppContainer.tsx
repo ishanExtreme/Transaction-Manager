@@ -1,11 +1,10 @@
-import React from "react";
-import { ToastContainer } from 'react-toastify';
-import Container from 'react-bootstrap/Container';
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+import React from 'react'
+import { ToastContainer } from 'react-toastify'
+import Container from 'react-bootstrap/Container'
 
-export default function AppContainer(props:{children:React.ReactNode}) {
-    
-
-    return (
+export default function AppContainer (props: { children: React.ReactNode }) {
+  return (
         <>
             <ToastContainer
             position="top-right"
@@ -18,11 +17,11 @@ export default function AppContainer(props:{children:React.ReactNode}) {
             draggable
             pauseOnHover
             />
-        
-        <Container className="p-5" fluid style={{"height":"100vh"}}>
+
+        <Container className="p-5" fluid style={{ height: '100vh' }}>
             {props.children}
         </Container>
         </>
-        
-    )
+
+  )
 }

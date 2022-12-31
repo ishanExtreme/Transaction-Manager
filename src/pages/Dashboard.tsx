@@ -1,56 +1,61 @@
-import React, { useEffect, useState } from "react";
-import { Friend, Friends, User } from "../types/users";
-import { HiOutlineUserPlus, HiOutlineUserGroup } from "react-icons/hi2";
-import { ButtonGroup, Col, Row } from "react-bootstrap";
-import IconButton from "../components/common/IconButton";
-import AddFriendModal from "../components/modals/AddFriendModal";
-import { listFriends } from "../api/api";
-import ListFriendModal from "../components/modals/ListFriendsModal";
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+import React, { useEffect, useState } from 'react'
+import { Friend, Friends, User } from '../types/users'
+import { HiOutlineUserPlus, HiOutlineUserGroup } from 'react-icons/hi2'
+import { ButtonGroup, Col, Row } from 'react-bootstrap'
+import IconButton from '../components/common/IconButton'
+import AddFriendModal from '../components/modals/AddFriendModal'
+import { listFriends } from '../api/api'
+import ListFriendModal from '../components/modals/ListFriendsModal'
+import BudgetLayer from '../components/Dashboard/BudgetLayer'
 
 const getFriendListFromApi = async (
-setLoading: (loading:boolean)=>void,
-setFriends: (friends:Friends)=>void
-)=>{
-  setLoading(true);
+  setLoading: (loading: boolean) => void,
+  setFriends: (friends: Friends) => void
+) => {
+  setLoading(true)
 
   let friends = null
-  try{
+  try {
     friends = await listFriends()
-  }
-  catch(error)
-  {
+  } catch (error) {
     setLoading(false)
-    return;
+    return
   }
 
   setFriends(friends[0].friends)
   setLoading(false)
 }
 
-export default function Dashboard(props:{user:User}) {
+export default function Dashboard (props: { user: User }) {
   const [openAddFriendModel, setOpenAddFriendModal] = useState(false)
   const [openListFriendModal, setOpenListFriendModal] = useState(false)
 
   const [friendsLoading, setFriendsLoading] = useState(false)
   const [friends, setFriends] = useState<Friends>([])
 
-  useEffect(()=>{
-    getFriendListFromApi(setFriendsLoading, setFriends);
-  },[])
+  const [budget, setBudget] = useState((props.user != null) ? props.user.budget : 0)
 
-  const toogleAddFriendModal = (open:boolean)=>{
+  useEffect(() => {
+    void getFriendListFromApi(setFriendsLoading, setFriends)
+  }, [])
+
+  const toogleAddFriendModal = (open: boolean) => {
     setOpenAddFriendModal(open)
   }
-  const toogleListFriendModal = (open:boolean)=>{
+  const toogleListFriendModal = (open: boolean) => {
     setOpenListFriendModal(open)
   }
 
-  const addFriend = (friend: Friend)=>{
+  const addFriend = (friend: Friend) => {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    const dublicate = friends.filter((curr_friend) => friend.username === curr_friend.username)
 
-    const dublicate = friends.filter((curr_friend)=> friend.username === curr_friend.username)
+    if (dublicate.length === 0) { setFriends((friends) => [...friends, friend]) }
+  }
 
-    if(dublicate.length === 0)
-      setFriends((friends)=> [...friends, friend])
+  const editBudget = (budget: number) => {
+    setBudget(budget)
   }
 
   return (
@@ -59,13 +64,22 @@ export default function Dashboard(props:{user:User}) {
     <ListFriendModal friends={friends} loading={friendsLoading} open={openListFriendModal} toogleOpen={toogleListFriendModal} />
 
     <Row>
-      <Col>
+      <Col xs={3} className="mb-3">
+        <BudgetLayer
+        budget={budget}
+        owe={200}
+        owed={500}
+        username={(props.user != null) ? props.user.username : ''}
+        editBudget={editBudget}
+        />
+      </Col>
+      <Col xs={12}>
         <ButtonGroup>
-          <IconButton text="Add Friends" onClick={()=>toogleAddFriendModal(true)} >
+          <IconButton text="Add Friends" onClick={() => toogleAddFriendModal(true)} >
             <HiOutlineUserPlus />
           </IconButton>
 
-          <IconButton text="Show Friends" onClick={()=>toogleListFriendModal(true)} >
+          <IconButton text="Show Friends" onClick={() => toogleListFriendModal(true)} >
             <HiOutlineUserGroup />
           </IconButton>
         </ButtonGroup>
@@ -73,5 +87,4 @@ export default function Dashboard(props:{user:User}) {
     </Row>
     </>
   )
-
 }
