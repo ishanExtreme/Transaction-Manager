@@ -12,7 +12,6 @@ Babel==2.11.0
 backcall==0.2.0
 binaryornot==0.4.4
 black==22.12.0
-certifi @ file:///private/var/folders/sy/f16zz6x50xz3113nwtb9bvq00000gp/T/abs_477u68wvzm/croot/certifi_1671487773341/work/certifi
 cffi==1.15.1
 cfgv==3.3.1
 chardet==5.1.0
