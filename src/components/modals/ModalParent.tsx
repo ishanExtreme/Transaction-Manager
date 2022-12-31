@@ -32,11 +32,13 @@ export default function ModalParent (props: {
       <Modal.Footer>
 
           <Stack direction="horizontal" gap={2}>
-            {(props.loading ?? false)
+          {/* eslint-disable-next-line @typescript-eslint/strict-boolean-expressions */}
+            {props.loading
               ? <Loading />
-              : (props.handleSubmit !== null)
-                  ? <Button onClick={props.handleSubmit}>Submit</Button>
-                  : <></>
+              // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
+              : props.handleSubmit
+                ? <Button onClick={props.handleSubmit}>Submit</Button>
+                : <></>
             }
 
             <Button variant='danger' onClick={() => props.toogleOpen(false)}>Close</Button>

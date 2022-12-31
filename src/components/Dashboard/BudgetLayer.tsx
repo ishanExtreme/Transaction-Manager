@@ -16,6 +16,7 @@ export default function BudgetLayer (props: {
   moneySpent: number
   editBudget: (budget: number) => void
   handleClick: (open: boolean) => void
+  toogleAddTransactionModal: (open: boolean) => void
 }) {
   const [remainingBudget, setRemainingBudget] = useState(calRemainingBudget(props.budget, props.moneySpent))
 
@@ -41,10 +42,10 @@ export default function BudgetLayer (props: {
           </div>
 
           <p className="fw-light text-success">Your are owed: +₹{props.owed}</p>
-          <p className="fw-light text-danger">Your owe: -₹{props.owe}</p>
+          <p className="fw-light text-danger">You owe: -₹{props.owe}</p>
         </Card.Text>
 
-        <IconButton variant='primary' text="Add Transaction">
+        <IconButton onClick={() => props.toogleAddTransactionModal(true)} variant='primary' text="Add Transaction">
           <HiOutlineCurrencyRupee/>
         </IconButton>
 

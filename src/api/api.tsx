@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
+import { TransactionCreateApi } from '../types/transaction'
 import { UserLoginApi, UserRegisterApi } from '../types/users'
 import { triggerToast } from '../utils/notification'
 
@@ -102,4 +103,12 @@ export const listFriends = async () => {
 
 export const editBudget = async (budget: number) => {
   return await request('user-edit/', 'PATCH', { budget })
+}
+
+export const addTransaction = async (transaction: TransactionCreateApi) => {
+  return await request('transaction/', 'POST', transaction)
+}
+
+export const getTransactions = async () => {
+  return await request('transaction/', 'GET')
 }
