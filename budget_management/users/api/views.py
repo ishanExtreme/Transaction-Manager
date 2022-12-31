@@ -33,7 +33,7 @@ class UserCreationSerializer(ModelSerializer):
 class UserGetSerializer(ModelSerializer):
     class Meta:
         model = User
-        fields = ["username", "email"]
+        fields = ["username", "email", "budget"]
 
 
 # Register User

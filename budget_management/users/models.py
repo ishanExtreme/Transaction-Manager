@@ -17,6 +17,8 @@ class User(AbstractUser):
     first_name = None  # type: ignore
     last_name = None  # type: ignore
 
+    budget = models.DecimalField(max_digits=10, decimal_places=2, default=1000.00)
+
     def get_absolute_url(self):
         """Get url for user's detail view.
 
@@ -29,7 +31,7 @@ class User(AbstractUser):
 
 class Friend(models.Model):
 
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='owner')
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name="owner")
     friends = models.ManyToManyField(User, null=True)
 
     # add new user to friend list
