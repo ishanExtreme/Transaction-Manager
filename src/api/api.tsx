@@ -99,3 +99,7 @@ export const addFriend = async (friend: string) => {
 export const listFriends = async () => {
   return await request('list-friends/', 'GET')
 }
+
+export const editBudget = async (budget: number) => {
+  return await request('user-edit/', 'PATCH', { budget })
+}

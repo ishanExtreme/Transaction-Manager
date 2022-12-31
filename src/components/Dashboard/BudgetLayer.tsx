@@ -1,16 +1,28 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Card } from 'react-bootstrap'
 import IconButton from '../common/IconButton'
 import { HiOutlineCurrencyRupee, HiOutlinePencilSquare } from 'react-icons/hi2'
+
+const calRemainingBudget = (budget: number, moneySpent: number): number => {
+  return budget - moneySpent
+}
 
 export default function BudgetLayer (props: {
   username: string
   budget: number
   owed: number
   owe: number
+  moneySpent: number
   editBudget: (budget: number) => void
+  handleClick: (open: boolean) => void
 }) {
+  const [remainingBudget, setRemainingBudget] = useState(calRemainingBudget(props.budget, props.moneySpent))
+
+  useEffect(() => {
+    setRemainingBudget(calRemainingBudget(props.budget, props.moneySpent))
+  }, [props.budget])
+
   return (
     <Card style={{ width: '25rem' }} className="text-center">
       <Card.Body>
@@ -19,11 +31,11 @@ export default function BudgetLayer (props: {
         <Card.Text>
 
           <div className='mb-3'>
-            {props.budget > 0
-              ? <p className="fw-bold text-info">Your Remaining Budget: ₹{props.budget}</p>
-              : <p className="fw-bold text-warning">Your Remaining Budget: ₹{props.budget}</p>
+            {remainingBudget > 0
+              ? <p className="fw-bold text-info">Your Remaining Budget: ₹{remainingBudget}</p>
+              : <p className="fw-bold text-warning">Your Remaining Budget: ₹{remainingBudget}</p>
             }
-            <IconButton variant='warning' text='Edit Budget'>
+            <IconButton variant='warning' text='Edit Budget' onClick={() => props.handleClick(true)}>
               <HiOutlinePencilSquare/>
             </IconButton>
           </div>

@@ -2,6 +2,9 @@ export type User = {
   username: string
   email: string
   budget: number
+  money_spent: number
+  owe: number
+  owed: number
 } | null
 
 export interface UserRegisterApi {
