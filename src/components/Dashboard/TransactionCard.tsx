@@ -4,9 +4,9 @@ import { HiOutlineUserCircle } from 'react-icons/hi2'
 import { Friends } from '../../types/users'
 import IconButton from '../common/IconButton'
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
+
 const calulcate_share = (amount: number, involved_users: Friends, non_members: string): number => {
-  // eslint-disable-next-line @typescript-eslint/naming-convention
+
   const total_users = involved_users.length + non_members.split(',').length
   return amount / total_users
 }

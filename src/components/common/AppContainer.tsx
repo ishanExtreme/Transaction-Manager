@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
+
 import React from 'react'
 import { ToastContainer } from 'react-toastify'
 import Container from 'react-bootstrap/Container'

@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
+
 import React from 'react'
 import { Button, ButtonGroup, Col, Row } from 'react-bootstrap'
 import { Friends } from '../../types/users'

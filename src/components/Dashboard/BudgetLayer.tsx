@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
+
 import React, { useEffect, useState } from 'react'
 import { Card } from 'react-bootstrap'
 import IconButton from '../common/IconButton'

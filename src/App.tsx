@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
+
 import React, { useEffect, useState } from 'react'
 import { me } from './api/api'
 import AppContainer from './components/common/AppContainer'

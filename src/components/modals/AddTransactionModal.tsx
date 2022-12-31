@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import React, { useState } from 'react'
 import { Button, ButtonGroup, Col, Dropdown, Form, InputGroup, Row } from 'react-bootstrap'
 import { Friends } from '../../types/users'
@@ -97,7 +97,6 @@ export default function AddTransactionModal (props: {
     title="Add Friend"
     toogleOpen={props.toogleOpen}
     loading={loading}
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     handleSubmit={handleSubmit}
     >
       <Form as={Row} className='justify-content-center'>

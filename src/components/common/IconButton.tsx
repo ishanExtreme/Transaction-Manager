@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
+
 import React from 'react'
 import { Button, ButtonProps, Stack } from 'react-bootstrap'
 

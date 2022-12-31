@@ -10,7 +10,7 @@ const Publicroutes = {
   '/login': () => <Signin user={null}/>
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+
 export default function AppRouterPublic () {
   // Public routes
   const routeResult = useRoutes(Publicroutes)

@@ -13,7 +13,7 @@ const Privateroutes = {
   '/dashboard': ({ user }: { user?: User }) => <Dashboard user={(user != null) ? user : null} />
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+
 export default function AppRouterPrivate (props: { currentUser: User }) {
   // Private routes
   const routeResult = useRoutes(Privateroutes, { routeProps: { user: props.currentUser } })

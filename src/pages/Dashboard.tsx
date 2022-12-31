@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
+
 import React, { useEffect, useState } from 'react'
 import { Friend, Friends, User } from '../types/users'
 import { HiOutlineUserPlus, HiOutlineUserGroup, HiOutlineMagnifyingGlass, HiOutlineXCircle, HiOutlineArrowLeftOnRectangle } from 'react-icons/hi2'
@@ -66,11 +66,11 @@ export default function Dashboard (props: { user: User }) {
   const [transactions, setTransactions] = useState<Transaction[]>([])
 
   const [budget, setBudget] = useState((props.user != null) ? props.user.budget : 0)
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
   const [moneySpent, setMoneySpent] = useState((props.user != null) ? props.user.money_spent : 0)
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
   const [owe, setOwe] = useState((props.user != null) ? props.user.owe : 0)
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
   const [owed, setOwed] = useState((props.user != null) ? props.user.owed : 0)
 
   const [search, setSearch] = useState('')
@@ -103,7 +103,7 @@ export default function Dashboard (props: { user: User }) {
   }
 
   const addFriend = (friend: Friend) => {
-    // eslint-disable-next-line @typescript-eslint/naming-convention
+
     const dublicate = friends.filter((curr_friend) => friend.username === curr_friend.username)
 
     if (dublicate.length === 0) { setFriends((friends) => [...friends, friend]) }
@@ -180,7 +180,7 @@ export default function Dashboard (props: { user: User }) {
               onChange={handleSearchChange}
               value={search}
             />
-            {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
+          
             <Button onClick={handleSearch} variant="outline-secondary">
               Search
             </Button>
@@ -198,11 +198,11 @@ export default function Dashboard (props: { user: User }) {
               </Col>
               <Col xs={2}>
               <ButtonGroup>
-                {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
+              
                 <IconButton variant='warning' text="" onClick={handleDateSearch}>
                   <HiOutlineMagnifyingGlass />
                 </IconButton>
-                {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
+                
                 <IconButton variant='warning' text="" onClick={hanleClearFilter}>
                   <HiOutlineXCircle />
                 </IconButton>

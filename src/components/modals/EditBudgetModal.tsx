@@ -41,7 +41,6 @@ export default function EditBudgetModal (props: {
     title="Add Friend"
     toogleOpen={props.toogleOpen}
     loading={loading}
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     handleSubmit={handleSubmit}>
       <Form as={Row} className='justify-content-center'>
         <Form.Group as={Col} xs={6} className="mb-3">

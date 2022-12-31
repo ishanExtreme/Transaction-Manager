@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
-/* eslint-disable react/react-in-jsx-scope */
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
+
 import { navigate } from 'raviger'
 import { useEffect, useState } from 'react'
 import Row from 'react-bootstrap/Row'

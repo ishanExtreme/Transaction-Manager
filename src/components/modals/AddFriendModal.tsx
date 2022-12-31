@@ -1,6 +1,4 @@
-/* eslint-disable react/no-unescaped-entities */
-/* eslint-disable @typescript-eslint/no-misused-promises */
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
+
 import React, { useState } from 'react'
 import { Col, Form, Row } from 'react-bootstrap'
 import { addFriend } from '../../api/api'

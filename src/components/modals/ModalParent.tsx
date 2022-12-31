@@ -1,5 +1,4 @@
-/* eslint-disable react/react-in-jsx-scope */
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
+
 import { Stack } from 'react-bootstrap'
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
@@ -32,10 +31,10 @@ export default function ModalParent (props: {
       <Modal.Footer>
 
           <Stack direction="horizontal" gap={2}>
-          {/* eslint-disable-next-line @typescript-eslint/strict-boolean-expressions */}
+          
             {props.loading
               ? <Loading />
-              // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
+            
               : props.handleSubmit
                 ? <Button onClick={props.handleSubmit}>Submit</Button>
                 : <></>
