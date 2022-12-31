@@ -109,6 +109,6 @@ export const addTransaction = async (transaction: TransactionCreateApi) => {
   return await request('transaction/', 'POST', transaction)
 }
 
-export const getTransactions = async () => {
-  return await request('transaction/', 'GET')
+export const getTransactions = async (filter: any) => {
+  return await request('transaction/', 'GET', filter)
 }

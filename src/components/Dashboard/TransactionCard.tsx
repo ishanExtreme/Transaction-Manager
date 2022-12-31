@@ -19,7 +19,7 @@ export default function TransactionCard (props: {
   non_members: string
 }): JSX.Element {
   return (
-    <Card>
+    <Card style={{ width: '18rem' }}>
       <Card.Header>{props.name}</Card.Header>
       <Card.Body className='text-center'>
         <Card.Text>

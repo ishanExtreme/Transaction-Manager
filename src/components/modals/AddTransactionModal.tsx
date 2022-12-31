@@ -80,13 +80,12 @@ export default function AddTransactionModal (props: {
       non_members: nonMembers.toString()
     }
 
-    console.log(data)
-
     try {
       await addTransaction(data)
       // props.editBudget(budget)
       setLoading(false)
-      triggerToast('success', 'Transaction added succesfully!')
+      window.location.reload()
+      // triggerToast('success', 'Transaction added succesfully!')
     } catch (error) {
       setLoading(false)
     }
