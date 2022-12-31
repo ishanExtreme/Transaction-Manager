@@ -13,6 +13,7 @@ from budget_management.users.api.views import (
     UserGet,
     FriendCreation,
     FriendList,
+    UserEdit
 )
 
 
@@ -39,6 +40,7 @@ urlpatterns = (
         path("api/token", views.obtain_auth_token),
         path("api/create-friend/", FriendCreation.as_view()),
         path("api/list-friends/", FriendList.as_view()),
+        path("api/user-edit/", UserEdit.as_view())
     ]
     + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     + router.urls

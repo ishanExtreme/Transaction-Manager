@@ -18,6 +18,9 @@ class User(AbstractUser):
     last_name = None  # type: ignore
 
     budget = models.DecimalField(max_digits=10, decimal_places=2, default=1000.00)
+    money_spent = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    owe = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    owed = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
 
     def get_absolute_url(self):
         """Get url for user's detail view.

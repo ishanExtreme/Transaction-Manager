@@ -33,7 +33,7 @@ class UserCreationSerializer(ModelSerializer):
 class UserGetSerializer(ModelSerializer):
     class Meta:
         model = User
-        fields = ["username", "email", "budget"]
+        fields = ["username", "email", "budget", "money_spent", "owe", "owed"]
 
 
 # Register User
@@ -51,6 +51,16 @@ class UserGet(mixins.ListModelMixin, GenericViewSet):
 
     def get_queryset(self):
         return User.objects.filter(username=self.request.user.username)
+
+
+# edit user
+class UserEdit(generics.UpdateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserGetSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def get_object(self):
+        return self.request.user
 
 
 # ----------------------- Friend viewset --------------------------------
