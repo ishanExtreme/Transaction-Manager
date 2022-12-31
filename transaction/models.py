@@ -12,6 +12,7 @@ class Transaction(models.Model):
     name = models.CharField(max_length=100)
     category = models.CharField(max_length=100)
     involved_users = models.ManyToManyField(User, related_name="involved_users")
+    non_members = models.CharField(max_length=1000, blank=True)
 
     def __str__(self):
-        return f"{self.user} - {self.amount}"
+        return f"{self.owner} - {self.amount}"

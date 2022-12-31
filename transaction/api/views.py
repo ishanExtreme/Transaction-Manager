@@ -8,6 +8,13 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
 from transaction.models import Transaction
 
+from django_filters.rest_framework import (
+    DjangoFilterBackend,
+    FilterSet,
+    CharFilter,
+    DateFilter,
+)
+
 from django.db import transaction
 
 
@@ -17,27 +24,41 @@ User = get_user_model()
 class UserSerializer(ModelSerializer):
     class Meta:
         model = User
-        fields = "username"
+        fields = ["username"]
 
 
 class TransactionSerializer(ModelSerializer):
 
-    involved_users = UserSerializer(many=True)
+    involved_users = UserSerializer(many=True, read_only=True)
 
     class Meta:
         model = Transaction
-        fields = ("id", "owner", "amount", "date", "name", "category", "involved_users")
+        fields = (
+            "id",
+            "amount",
+            "date",
+            "name",
+            "category",
+            "involved_users",
+            "non_members",
+        )
         extra_kwargs = {
-            "owner": {"read_only": True},
             "date": {"read_only": True},
             "id": {"read_only": True},
         }
+
+
+class TransactionFilter(FilterSet):
+    category = CharFilter(lookup_expr="icontains")
+    date = DateFilter()
 
 
 class TransactionViewSet(ModelViewSet):
     serializer_class = TransactionSerializer
     permission_classes = (IsAuthenticated,)
     queryset = Transaction.objects.all()
+    filter_backends = (DjangoFilterBackend,)
+    filterset_class = TransactionFilter
 
     def get_queryset(self):
         return Transaction.objects.filter(owner=self.request.user)
@@ -48,15 +69,22 @@ class TransactionViewSet(ModelViewSet):
         serializer.is_valid(raise_exception=True)
 
         # add default things to transaction
-        serializer.date = datetime.now()
-        serializer.owner = self.request.user
-        usernames = serializer.validated_data["involved_users"]
+        try:
+            usernames = request.data["involved_users"]
+        except:
+            return Response(
+                {"error": ["Something went wrong"]},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
 
+        non_member = serializer.validated_data["non_members"].split(",")
         user_list = []
+        user_list_id = []
         for username in usernames:
             try:
-                user = User.objects.get(username=username)
+                user = User.objects.get(username=username["username"])
                 user_list.append(user)
+                user_list_id.append(user.id)
             except User.DoesNotExist:
                 return Response(
                     {"error": [f"User with username: {username}  not found"]},
@@ -65,11 +93,11 @@ class TransactionViewSet(ModelViewSet):
 
         with transaction.atomic():
 
-            serializer.save()
+            trans = serializer.save(owner=self.request.user, date=datetime.now())
             # add involved users to transaction
-            serializer.involved_users.set(user_list)
+            trans.involved_users.set(user_list)
 
-            number_of_involved_users = len(user_list)
+            number_of_involved_users = len(user_list) + len(non_member)
             # share of each user + owner
             share = serializer.validated_data["amount"] / (number_of_involved_users + 1)
 
